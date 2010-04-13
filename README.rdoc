@@ -1,0 +1,18 @@
+= Test Unit Exclusion List
+
+Ignore specific tests that are in an exclusion list.
+
+This is to enable skipping of tests in plugins/engines that don't apply due to app specific requirements.
+
+== Usage
+
+In your test helper
+
+  require 'test_unit_exclusion_list'
+  
+In sub-class of ActiveSupport::TestCase, or when over-riding ActiveSupport::TestCase
+
+  acts_as_test_exclusion_list
+
+
+Copyright (c) 2010 Niall Mullally, released under the MIT license
