@@ -6,13 +6,46 @@ This is to enable skipping of tests in plugins/engines that don't apply due to a
 
 == Usage
 
-In your test helper
+In your test helper:
 
   require 'test_unit_exclusion_list'
   
-In sub-class of ActiveSupport::TestCase, or when over-riding ActiveSupport::TestCase
+In sub-class of ActiveSupport::TestCase, or when over-riding ActiveSupport::TestCase:
 
   acts_as_test_exclusion_list
+  
+Define a #exclusion_list method which returns an array of test names that should be skipped:
+
+  def exclusion_list
+    %w(
+      test_formatted_postcode
+      test_subtotal_calculation
+      test_navigating_to_my_account
+    )
+  end
+
+== Example
+
+  ENV["RAILS_ENV"] = "test"
+  require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
+  require 'test_help'
+  require 'test_unit_exclusion_list'
+
+  class ActiveSupport::TestCase
+    
+    acts_as_test_exclusion_list
+    
+    def exclusion_list
+      %w(
+        test_formatted_postcode
+        test_subtotal_calculation
+        test_navigating_to_my_account
+      )
+    end
+    
+    # ...rest of test helper
+    
+  end
 
 
 Copyright (c) 2010 Niall Mullally, released under the MIT license
