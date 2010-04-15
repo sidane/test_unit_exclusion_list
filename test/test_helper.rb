@@ -16,10 +16,8 @@ end
 
 class MockTesterSubclass < MockTester
   
-  acts_as_test_exclusion_list
-  
-  def exclusion_list
-    %w(test_to_be_excluded)
-  end
+  acts_as_test_exclusion_list(
+    :exclusion_list_path => File.expand_path(File.dirname(__FILE__) + "/sample_exclusion_list.yml")
+  )
   
 end

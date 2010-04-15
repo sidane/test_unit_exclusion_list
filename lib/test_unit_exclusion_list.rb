@@ -1,14 +1,12 @@
 # Ignore specific tests that are in an exclusion list
-#
-# This is to enable skipping of tests in plugins/engines 
-# that don't apply due to app specific requirements
-#
-# Be sure to "require 'test_unit_exclusion_list'" in your test helper
-# then call 'acts_as_test_exclusion_list' method in sub-class of ActiveSupport::TestCase
-# or when over-riding ActiveSupport::TestCase
-def acts_as_test_exclusion_list
+# See README.rdoc for full usage instructions
+require 'yaml'
+
+def acts_as_test_exclusion_list(opts = {})
+  
+  set_exclusion_list_path(opts[:exclusion_list_path])
+
   class_eval do
-    
     def initialize(name)
       if exclusion_list.include?(name)
         name = "skip_test" # over-ride test name so that it doesn't run
@@ -16,12 +14,19 @@ def acts_as_test_exclusion_list
       super(name)
     end
     
-    # over-ride this method to define your exclusion list
-    # TODO - move defining of exclusion list to YAML config file
     def exclusion_list
-      []
+      YAML.load(File.read(@@exclusion_list_path))
     end
-    
   end
 end
+
+  private
+  
+  def set_exclusion_list_path(path)
+    if path.nil?
+      raise ArgumentError, 
+      "Please specify path to exclusion list - acts_as_test_exclusion_list(:exclusion_list_path => '/path/to/file')"
+    end
+    @@exclusion_list_path = path
+  end
     
