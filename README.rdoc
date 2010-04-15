@@ -9,10 +9,10 @@ This is to enable skipping of tests in plugins/engines that don't apply due to a
 Create YAML file in a location of your choice (e.g. Rails.root/config/test_exclusion_list.yml) with an
 array defining the names of tests to skip:
 
-[
-  "test_to_be_excluded",
-  "Another test to be excluded"
-]
+  [
+    "test_to_be_excluded",
+    "Another test to be excluded"
+  ]
 
 In your test helper:
 
