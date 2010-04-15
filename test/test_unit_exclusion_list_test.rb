@@ -7,6 +7,11 @@ class TestUnitExclusionListTest < ActiveSupport::TestCase
     assert_equal "skip_test", tester.method_name
   end
   
+  test "Method in exclusion list with non-underscored name is renamed" do
+    tester = MockTesterSubclass.new("Another test to be excluded")
+    assert_equal "skip_test", tester.method_name
+  end
+  
   test "Method not in exclusion list is not renamed" do
     tester = MockTesterSubclass.new("test_not_to_be_excluded")
     assert_equal "test_not_to_be_excluded", tester.method_name
